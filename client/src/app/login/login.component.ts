@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +18,9 @@ export class LoginComponent {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/']);
       },
-      err => {
-        alert('Login failed');
+      (err: any) => {
+        console.error('Login error:', err);
+        alert('Login failed. Please try again.');
       }
     );
   }
