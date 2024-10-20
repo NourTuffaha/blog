@@ -1,0 +1,28 @@
+<form
+  (ngSubmit)="
+    onSubmit(username.value, email.value, password.value, confirmPassword.value)
+  "
+>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" #username required />
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" #email required />
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" #password required />
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" #confirmPassword required />
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit">Register</button>
+</form>

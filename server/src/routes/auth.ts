@@ -1,15 +1,14 @@
-import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import express, { NextFunction, Request, Response } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 
 const router = express.Router();
-const JWT_SECRET = 'your_jwt_secret_key';
+const JWT_SECRET = 'secret';
 
-interface AuthRequest extends Request {
-  user?: string;
+export interface AuthRequest extends Request {
+  user?: { _id: string };
 }
 
-// Register route
 router.post('/register', async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   try {
@@ -35,25 +34,18 @@ router.post('/login', async (req: Request, res : any ) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '2h' });
     res.json({ token });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 });
+export interface AuthRequest extends Request {
+  user?: { _id: string }; 
+}
 
-// Middleware to protect routes
-const authMiddleware = (req: AuthRequest, res: Response, next: Function) => {
-  const token = req.header('x-auth-token');
-  if (!token) return res.status(401).json({ message: 'No token, authorization denied' });
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    req.user = decoded.userId;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
-  }
-};
 
-export { router as authRoutes, authMiddleware };
+
+
+export { router as authRoutes };

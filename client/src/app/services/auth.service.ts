@@ -22,12 +22,30 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage?.removeItem('token');
     this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage?.getItem('token');
     return !!token && !this.jwtHelper.isTokenExpired(token);
   }
+
+  getToken(): string | null {
+    return localStorage?.getItem('token');
+  }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log({decodedToken})
+      return decodedToken.userId; 
+    }
+    return null;
+  }
+
+  getUserProfile(userId: string): Observable<any> {
+  return this.http.get<any>(`http://localhost:5000/api/users/${userId}/profile`);
+}
 }

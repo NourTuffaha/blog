@@ -1,0 +1,66 @@
+<div class="container">
+  <h2>Posts</h2>
+
+  <form (submit)="createPost()">
+    <input
+      type="text"
+      [(ngModel)]="newPost.title"
+      name="title"
+      placeholder="Post Title"
+      required
+    />
+    <textarea
+      [(ngModel)]="newPost.content"
+      name="content"
+      placeholder="Post Content"
+      required
+    ></textarea>
+    <button type="submit">Create Post</button>
+  </form>
+
+  <div *ngFor="let post of posts" class="post">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+
+    <div class="reactions">
+      <button (click)="reactToPost(post._id, 'like')">
+        👍 {{ post.reactions["like"] }}
+      </button>
+      <button (click)="reactToPost(post._id, 'love')">
+        ❤️ {{ post.reactions["love"] }}
+      </button>
+      <button (click)="reactToPost(post._id, 'angry')">
+        😡 {{ post.reactions["angry"] }}
+      </button>
+    </div>
+
+    <div>
+      <h4>Comments:</h4>
+      <div *ngFor="let comment of post.comments" class="comment">
+        <p>{{ comment.content }}</p>
+        <div class="reactions">
+          <button (click)="reactToComment(comment._id, 'like')">
+            👍 {{ comment.reactions["like"] }}
+          </button>
+          <button (click)="reactToComment(comment._id, 'love')">
+            ❤️ {{ comment.reactions["love"] }}
+          </button>
+          <button (click)="reactToComment(comment._id, 'angry')">
+            😡 {{ comment.reactions["angry"] }}
+          </button>
+        </div>
+      </div>
+
+      <form (submit)="addComment(post._id)">
+        <input
+          type="text"
+          [(ngModel)]="newComments[post._id].content"
+          name="commentContent"
+          placeholder="Add a comment"
+          required
+        />
+        <button type="submit">Comment</button>
+      </form>
+    </div>
+  </div>
+</div>

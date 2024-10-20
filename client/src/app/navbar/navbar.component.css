@@ -1,0 +1,42 @@
+nav {
+  background-color: #000969a1;
+  padding: 15px 0;
+  margin-bottom: 70px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+li {
+  margin-right: 20px;
+}
+
+a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #3498db;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    gap: 70px;
+  }
+
+  li {
+    margin-right: 0;
+    margin-bottom: 7px;
+  }
+}

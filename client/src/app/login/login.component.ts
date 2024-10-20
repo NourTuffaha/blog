@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+
+  standalone: true,
+  imports: [FormsModule]
 })
 export class LoginComponent {
   username: string = '';
@@ -16,7 +21,8 @@ export class LoginComponent {
     this.authService.login({ username: this.username, password: this.password }).subscribe(
       (res: any) => {
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/']);
+         console.log('Token stored:', res.token);
+        this.router.navigate(['/posts']);
       },
       (err: any) => {
         console.error('Login error:', err);

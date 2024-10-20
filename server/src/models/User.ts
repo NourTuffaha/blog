@@ -14,7 +14,6 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
   password: { type: String, required: true }
 });
 
-// Pre-save hook to hash passwords
 UserSchema.pre<IUser>('save', async function (next) {
   if (!this.isModified('password')) return next();
 
@@ -23,7 +22,6 @@ UserSchema.pre<IUser>('save', async function (next) {
   next();
 });
 
-// Method to compare passwords
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, this.password);
 };
